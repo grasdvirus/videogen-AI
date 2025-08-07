@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { generateScript } from "@/lib/gemini";
@@ -47,13 +47,14 @@ export default function CreatePage() {
         sourceValue: input,
         createdAt: Date.now(),
       };
-      const docRef = await addDoc(collection(db, "videos"), videoDoc as any);
+      await addDoc(collection(db, "videos"), videoDoc);
 
       setProgress(100);
       alert("Vidéo générée !");
       router.push("/profile");
-    } catch (e: any) {
-      alert(e.message || "Erreur");
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Erreur inconnue";
+      alert(message);
     } finally {
       setLoading(false);
     }

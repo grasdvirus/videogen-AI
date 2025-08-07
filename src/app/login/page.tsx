@@ -19,8 +19,9 @@ export default function LoginPage() {
     try {
       await signIn(email, password);
       router.push("/profile");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Erreur inconnue";
+      setError(message);
     } finally {
       setLoading(false);
     }
