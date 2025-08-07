@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signUp } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Spinner from "@/components/Spinner";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -56,7 +57,7 @@ export default function SignupPage() {
           disabled={loading}
           className="w-full py-3 rounded-lg bg-purple-500 hover:bg-purple-600 active:scale-95 transition-transform shadow-md"
         >
-          {loading ? "Création..." : "Créer mon compte"}
+          {loading ? <Spinner size={20} /> : "Créer mon compte"}
         </button>
         <p className="text-center text-sm">
           Déjà inscrit ? {" "}
