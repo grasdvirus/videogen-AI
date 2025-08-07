@@ -14,6 +14,10 @@ export function useMyVideos() {
       )
     : null;
   const [snapshot, loading, error] = useCollection(q);
-  const videos: VideoMeta[] = snapshot?.docs.map((d) => ({ id: d.id, ...(d.data() as VideoMeta) })) || [];
+  const videos: VideoMeta[] =
+    snapshot?.docs.map((d) => {
+      const data = d.data() as Omit<VideoMeta, "id">;
+      return { id: d.id, ...data };
+    }) || [];
   return { videos, loading, error };
 }
